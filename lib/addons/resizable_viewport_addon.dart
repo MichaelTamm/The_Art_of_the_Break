@@ -503,7 +503,5 @@ enum _ResizeDirection {
 }
 
 String _formatDimension(double value) {
-  return value == value.truncateToDouble()
-      ? value.toInt().toString()
-      : value.toString();
+  return value.round().toString();
 }

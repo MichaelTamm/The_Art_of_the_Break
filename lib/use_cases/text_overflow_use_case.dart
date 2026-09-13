@@ -68,7 +68,7 @@ Widget buildTextOverflowUseCase(BuildContext context) {
           ],
         ),
       ),
-      Container(height: 8),
+      SizedBox(height: 8),
       Expanded(
         child: SplitScreen(
           childSize: Size(cardWidth, cardHeight),
@@ -82,9 +82,9 @@ Widget buildTextOverflowUseCase(BuildContext context) {
         ),
       ),
       if (showZWSPHack) ...[
-        Container(height: 8),
+        SizedBox(height: 8),
         Center(child: DartCode("Characters(title).toList().join('\\u{200B}')")),
-        Container(height: 8),
+        SizedBox(height: 8),
         Expanded(
           child: SplitScreen(
             childSize: Size(cardWidth, cardHeight),

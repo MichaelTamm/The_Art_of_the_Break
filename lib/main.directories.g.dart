@@ -15,6 +15,8 @@ import 'package:the_art_of_the_break_widgetbook/use_cases/lonely_symbol_eur_use_
     as _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_eur_use_case;
 import 'package:the_art_of_the_break_widgetbook/use_cases/lonely_symbol_kmh_use_case.dart'
     as _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_kmh_use_case;
+import 'package:the_art_of_the_break_widgetbook/use_cases/soft_hypens_use_case.dart'
+    as _the_art_of_the_break_widgetbook_use_cases_soft_hypens_use_case;
 import 'package:the_art_of_the_break_widgetbook/use_cases/text_overflow_use_case.dart'
     as _the_art_of_the_break_widgetbook_use_cases_text_overflow_use_case;
 import 'package:widgetbook/widgetbook.dart' as _widgetbook;
@@ -34,6 +36,11 @@ final directories = <_widgetbook.WidgetbookNode>[
         builder:
             _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_eur_use_case
                 .buildLonelySymbolEurUseCase,
+      ),
+      _widgetbook.WidgetbookUseCase(
+        name: 'Soft Hyphens',
+        builder: _the_art_of_the_break_widgetbook_use_cases_soft_hypens_use_case
+            .buildSoftHyphensUseCase,
       ),
       _widgetbook.WidgetbookUseCase(
         name: 'Text Overflow',

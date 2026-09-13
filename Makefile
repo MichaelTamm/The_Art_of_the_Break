@@ -1,4 +1,4 @@
-.PHONY: init clean format lint
+.PHONY: init clean format lint test
 
 init: .flutter-plugins-dependencies lib/main.directories.g.dart
 
@@ -18,3 +18,6 @@ format:
 lint: .flutter-plugins-dependencies
 	dart format --output none --set-exit-if-changed lib/ scripts/ test/
 	flutter analyze --no-pub --fatal-warnings
+
+test: .flutter-plugins-dependencies
+	flutter test
