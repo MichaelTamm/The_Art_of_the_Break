@@ -55,7 +55,7 @@ class AutovioButton extends HookWidget {
   Widget build(BuildContext context) {
     final disabled = this.disabled || action == null;
     final icon = this.icon;
-    final labelWidget = breakNicely(label).text.alignCenter;
+    final labelWidget = breakNicely2(label).text.alignCenter;
     var customStyle = this.customStyle;
     final isIconButton = icon != null && label.isEmpty;
     Widget child;

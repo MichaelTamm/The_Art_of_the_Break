@@ -49,8 +49,21 @@ extension LayoutUtilsExtension on Widget {
 
 SizedBox spacer([double spacing = 10]) => SizedBox(width: spacing, height: spacing);
 
-/// Prevent a line break before the last word if it has just a few characters' ...
-String breakNicely(String s) {
+/// Prevent a line break before the last word if it has just a few characters.
+String breakNicely1(String s) {
+  // Find the first space character after the middle of s ...
+  final i = s.indexOf(' ', (s.length + 1) ~/ 2);
+  if (i < 0) {
+    // There is no space character in the second half of s ...
+    return s;
+  }
+  // Replace all space characters *after* the space character, where the line break should be,
+  // with non-breakable space characters, remove any soft hyphens ...
+  return s.substring(0, i + 1) + s.substring(i + 1).replaceAll(' ', '\u00A0').replaceAll('\u00AD', '');
+}
+
+/// Prevent a line break before the last word if it has just a few characters'.
+String breakNicely2(String s) {
   final n = s.length;
   // Find the first space character after the middle of s ...
   final i = s.indexOf(' ', (s.length + 1) ~/ 2);
@@ -59,7 +72,7 @@ String breakNicely(String s) {
     return s;
   }
   // Replace all space characters *after* the space character, where the line break should be,
-  // with non-breakable space characters ...
+  // with non-breakable space characters, remove any soft hyphens ...
   final j = s.lastIndexOf(' ', i - 1);
   if (j > 0) {
     // If we do not replace the space character at `i`, that's where the line break will be ...

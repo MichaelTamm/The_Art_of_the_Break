@@ -128,7 +128,7 @@ Widget buildSoftHyphensUseCase(BuildContext context) {
       },
       SizedBox(height: 8),
       WarningBox(
-        buildTitle: (style) => buildWidget(package, breakTitleNicely ? breakNicely(title) : title, style),
+        buildTitle: (style) => buildWidget(package, breakTitleNicely ? breakNicely2(title) : title, style),
         buildText: (style) => buildWidget(package, text, style, textAlign),
         button: AutovioButton('Öffne App-Einstellungen', customStyle: smallButtonStyle),
       ).withHorizontalPadding(20),

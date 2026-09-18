@@ -11,6 +11,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
+import 'package:the_art_of_the_break_widgetbook/use_cases/break_nicely_use_case.dart'
+    as _the_art_of_the_break_widgetbook_use_cases_break_nicely_use_case;
+import 'package:the_art_of_the_break_widgetbook/use_cases/cross_axis_align_use_case.dart'
+    as _the_art_of_the_break_widgetbook_use_cases_cross_axis_align_use_case;
 import 'package:the_art_of_the_break_widgetbook/use_cases/lonely_symbol_eur_use_case.dart'
     as _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_eur_use_case;
 import 'package:the_art_of_the_break_widgetbook/use_cases/lonely_symbol_kmh_use_case.dart'
@@ -26,16 +30,28 @@ final directories = <_widgetbook.WidgetbookNode>[
     name: 'The_Art_of_the_Break',
     useCases: [
       _widgetbook.WidgetbookUseCase(
-        name: 'Lonely Symbol km/h',
+        name: 'Cross Axis Align',
         builder:
-            _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_kmh_use_case
-                .buildLonelySymbolKmhUseCase,
+        _the_art_of_the_break_widgetbook_use_cases_cross_axis_align_use_case
+            .buildCrossAxisAlignUseCase,
       ),
       _widgetbook.WidgetbookUseCase(
         name: 'Lonely Symbol €',
         builder:
-            _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_eur_use_case
-                .buildLonelySymbolEurUseCase,
+        _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_eur_use_case
+            .buildLonelySymbolEurUseCase,
+      ),
+      _widgetbook.WidgetbookUseCase(
+        name: 'Lonely Symbol km/h',
+        builder:
+        _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_kmh_use_case
+            .buildLonelySymbolKmhUseCase,
+      ),
+      _widgetbook.WidgetbookUseCase(
+        name: 'Break Nicely',
+        builder:
+            _the_art_of_the_break_widgetbook_use_cases_break_nicely_use_case
+                .buildCrossAxisAlignUseCase,
       ),
       _widgetbook.WidgetbookUseCase(
         name: 'Soft Hyphens',
