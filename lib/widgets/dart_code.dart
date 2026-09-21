@@ -28,7 +28,7 @@ class DartCode extends HookWidget {
     useFuture(_initFuture);
 
     return DefaultTextStyle.merge(
-      style: const TextStyle(fontSize: 20, fontFamily: 'Courier'),
+      style: const TextStyle(fontSize: 20, fontFamily: 'JetBrainsMono'),
       child: Text.rich(
         dartSyntaxHighlighter?.highlight(dartCode) ?? TextSpan(text: '...'),
       ),

@@ -31,6 +31,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/JetBrainsMono-Regular.ttf
   assets:
     - assets/hyph-de-1996.dic
     - assets/hyph-de-1996.tex
