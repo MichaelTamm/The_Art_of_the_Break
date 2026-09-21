@@ -31,6 +31,18 @@
 
   <title>the_art_of_the_break</title>
   <link rel="manifest" href="manifest.json">
+
+  <!--
+    Flutter Web forces `touch-action: none` on <body>, which blocks all
+    native browser touch gestures - including pinch-to-zoom - even though a
+    permissive viewport meta tag is set. Re-enable pinch-to-zoom while
+    leaving panning/scrolling handled by Flutter itself.
+  -->
+  <style>
+    body[flt-embedding="full-page"] {
+      touch-action: pinch-zoom !important;
+    }
+  </style>
 </head>
 <body>
   <!--
