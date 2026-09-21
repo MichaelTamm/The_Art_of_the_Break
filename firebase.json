@@ -1,0 +1,12 @@
+{
+  "hosting": {
+    "site": "the-art-of-the-break",
+    "public": "build/web",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

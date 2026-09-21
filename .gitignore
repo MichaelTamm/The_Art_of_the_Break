@@ -33,6 +33,10 @@ migrate_working_dir/
 /build/
 /coverage/
 
+# Firebase local cache and temporary GitHub Actions credentials
+.firebase/
+gha-creds-*.json
+
 # Symbolication related
 app.*.symbols
 
