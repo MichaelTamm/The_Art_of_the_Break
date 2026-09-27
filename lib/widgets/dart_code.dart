@@ -29,9 +29,7 @@ class DartCode extends HookWidget {
 
     return DefaultTextStyle.merge(
       style: const TextStyle(fontSize: 20, fontFamily: 'JetBrainsMono'),
-      child: Text.rich(
-        dartSyntaxHighlighter?.highlight(dartCode) ?? TextSpan(text: '...'),
-      ),
+      child: Text.rich(dartSyntaxHighlighter?.highlight(dartCode) ?? TextSpan(text: '...')),
     );
   }
 }

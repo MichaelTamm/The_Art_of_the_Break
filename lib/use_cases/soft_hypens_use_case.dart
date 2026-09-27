@@ -17,6 +17,7 @@ import '../autovio/layout_utils.dart';
 import '../autovio/warning_box.dart';
 import '../the_art_of_the_break.dart';
 import '../widgets/dart_code.dart';
+import '../widgets/scrollable_column.dart';
 
 enum _SoftHyphens { none, manual, auto }
 
@@ -106,9 +107,9 @@ Widget buildSoftHyphensUseCase(BuildContext context) {
     };
   }
 
-  return Column(
+  return ScrollableColumn(
     children: [
-      Expanded(child: SizedBox.shrink()),
+      Expanded(child: SizedBox(height: 8)),
       DartCode("Text('...') // no soft hyphens"),
       SizedBox(height: 8),
       WarningBox(
@@ -116,7 +117,7 @@ Widget buildSoftHyphensUseCase(BuildContext context) {
         buildText: (style) => Text(text.replaceAll('\u00AD', ''), style: style, textAlign: textAlign),
         button: AutovioButton('Öffne App-Einstellungen', customStyle: smallButtonStyle),
       ).withHorizontalPadding(20),
-      Expanded(child: SizedBox.shrink()),
+      Expanded(child: SizedBox(height: 24)),
       switch (package) {
         _Package.flutter => DartCode("Text('...')"),
         _Package.auto_hyphenating_text => DartCode("AutoHyphenatingText(...)"),
@@ -132,7 +133,7 @@ Widget buildSoftHyphensUseCase(BuildContext context) {
         buildText: (style) => buildWidget(package, text, style, textAlign),
         button: AutovioButton('Öffne App-Einstellungen', customStyle: smallButtonStyle),
       ).withHorizontalPadding(20),
-      Expanded(child: SizedBox.shrink()),
+      Expanded(child: SizedBox(height: 8)),
     ],
   );
 }

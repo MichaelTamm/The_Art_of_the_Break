@@ -32,20 +32,20 @@ final directories = <_widgetbook.WidgetbookNode>[
       _widgetbook.WidgetbookUseCase(
         name: 'Cross Axis Align',
         builder:
-        _the_art_of_the_break_widgetbook_use_cases_cross_axis_align_use_case
-            .buildCrossAxisAlignUseCase,
+            _the_art_of_the_break_widgetbook_use_cases_cross_axis_align_use_case
+                .buildCrossAxisAlignUseCase,
       ),
       _widgetbook.WidgetbookUseCase(
         name: 'Lonely Symbol €',
         builder:
-        _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_eur_use_case
-            .buildLonelySymbolEurUseCase,
+            _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_eur_use_case
+                .buildLonelySymbolEurUseCase,
       ),
       _widgetbook.WidgetbookUseCase(
         name: 'Lonely Symbol km/h',
         builder:
-        _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_kmh_use_case
-            .buildLonelySymbolKmhUseCase,
+            _the_art_of_the_break_widgetbook_use_cases_lonely_symbol_kmh_use_case
+                .buildLonelySymbolKmhUseCase,
       ),
       _widgetbook.WidgetbookUseCase(
         name: 'Break Nicely',

@@ -18,10 +18,7 @@ class SplitScreen extends StatelessWidget {
       children: children
           .map(
             (child) => Expanded(
-              child: Align(
-                alignment: childAlignment,
-                child: _buildChildContainer(child),
-              ),
+              child: Align(alignment: childAlignment, child: _buildChildContainer(child)),
             ),
           )
           .toList(),
@@ -29,10 +26,6 @@ class SplitScreen extends StatelessWidget {
   }
 
   Widget _buildChildContainer(Widget child) {
-    return SizedBox(
-      width: childSize.width,
-      height: childSize.height,
-      child: child,
-    );
+    return SizedBox(width: childSize.width, height: childSize.height, child: child);
   }
 }

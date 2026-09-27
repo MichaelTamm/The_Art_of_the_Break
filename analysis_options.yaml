@@ -1,6 +1,10 @@
+formatter:
+  page_width: 120
+
 analyzer:
   exclude:
     - build/**
     - linux/**
     - web/**
+
 include: package:flutter_lints/flutter.yaml

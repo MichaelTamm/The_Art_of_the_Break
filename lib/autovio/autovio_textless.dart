@@ -45,7 +45,8 @@ class AutovioThemedText extends StatelessWidget {
     );
   }
 
-  AutovioThemedText textless(Map<String, dynamic> extra) => AutovioThemedText(data: data, style: style, extra: {...?this.extra, ...extra});
+  AutovioThemedText textless(Map<String, dynamic> extra) =>
+      AutovioThemedText(data: data, style: style, extra: {...?this.extra, ...extra});
 
   AutovioThemedText get overflowVisible => textless({'overflow': TextOverflow.visible});
   AutovioThemedText get overflowClip => textless({'overflow': TextOverflow.clip});

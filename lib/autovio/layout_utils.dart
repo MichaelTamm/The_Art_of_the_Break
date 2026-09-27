@@ -6,29 +6,25 @@ extension LayoutUtilsExtension on Widget {
   Padding withPaddingFromLTRB(double left, double top, double right, double bottom) =>
       Padding(padding: EdgeInsets.fromLTRB(left, top, right, bottom), child: this);
 
-  Padding withHorizontalPadding(double value) =>
-      Padding(
-        padding: EdgeInsets.symmetric(horizontal: value),
-        child: this,
-      );
+  Padding withHorizontalPadding(double value) => Padding(
+    padding: EdgeInsets.symmetric(horizontal: value),
+    child: this,
+  );
 
-  Padding withVerticalPadding(double value) =>
-      Padding(
-        padding: EdgeInsets.symmetric(vertical: value),
-        child: this,
-      );
+  Padding withVerticalPadding(double value) => Padding(
+    padding: EdgeInsets.symmetric(vertical: value),
+    child: this,
+  );
 
-  Padding withLeftPadding(double value) =>
-      Padding(
-        padding: EdgeInsets.only(left: value),
-        child: this,
-      );
+  Padding withLeftPadding(double value) => Padding(
+    padding: EdgeInsets.only(left: value),
+    child: this,
+  );
 
-  Padding withRightPadding(double value) =>
-      Padding(
-        padding: EdgeInsets.only(right: value),
-        child: this,
-      );
+  Padding withRightPadding(double value) => Padding(
+    padding: EdgeInsets.only(right: value),
+    child: this,
+  );
 
   Widget withTopPadding(double value) {
     if (value == 0) {
@@ -40,11 +36,10 @@ extension LayoutUtilsExtension on Widget {
     );
   }
 
-  Padding withBottomPadding(double value) =>
-      Padding(
-        padding: EdgeInsets.only(bottom: value),
-        child: this,
-      );
+  Padding withBottomPadding(double value) => Padding(
+    padding: EdgeInsets.only(bottom: value),
+    child: this,
+  );
 }
 
 SizedBox spacer([double spacing = 10]) => SizedBox(width: spacing, height: spacing);
@@ -87,4 +82,3 @@ String breakNicely2(String s) {
   }
   return s.substring(0, i + 1) + s.substring(i + 1).replaceAll(' ', '\u00A0').replaceAll('\u00AD', '');
 }
-

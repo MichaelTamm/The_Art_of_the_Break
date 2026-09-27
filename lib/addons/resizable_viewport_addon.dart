@@ -36,11 +36,7 @@ class ResizableViewportAddon extends WidgetbookAddon<ViewportData> {
   }
 
   @override
-  Widget buildUseCase(
-    BuildContext context,
-    Widget child,
-    ViewportData setting,
-  ) {
+  Widget buildUseCase(BuildContext context, Widget child, ViewportData setting) {
     // This has the same behaviour as Widgetbook's ViewportAddon for the
     // built-in `Viewports.none` value, without relying on its internal type.
     if (setting.width == 0 && setting.height == 0) return child;
@@ -87,12 +83,7 @@ class _ViewportPresetField extends ObjectDropdownField<ViewportData> {
         onViewportSelected();
       },
       dropdownMenuEntries: values
-          .map(
-            (viewport) => DropdownMenuEntry(
-              value: viewport,
-              label: labelBuilder(viewport),
-            ),
-          )
+          .map((viewport) => DropdownMenuEntry(value: viewport, label: labelBuilder(viewport)))
           .toList(),
     );
   }
@@ -133,8 +124,7 @@ class _ResizableViewportState extends State<_ResizableViewport> {
   void didUpdateWidget(covariant _ResizableViewport oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.data != widget.data ||
-        oldWidget.resetVersion != widget.resetVersion) {
+    if (oldWidget.data != widget.data || oldWidget.resetVersion != widget.resetVersion) {
       _size = widget.data.size;
       _translation = Offset.zero;
     }
@@ -145,31 +135,19 @@ class _ResizableViewportState extends State<_ResizableViewport> {
     final newWidth = switch (direction) {
       _ResizeDirection.left ||
       _ResizeDirection.topLeft ||
-      _ResizeDirection.bottomLeft => (oldSize.width - delta.dx).clamp(
-        _minimumExtent,
-        double.infinity,
-      ),
+      _ResizeDirection.bottomLeft => (oldSize.width - delta.dx).clamp(_minimumExtent, double.infinity),
       _ResizeDirection.right ||
       _ResizeDirection.topRight ||
-      _ResizeDirection.bottomRight => (oldSize.width + delta.dx).clamp(
-        _minimumExtent,
-        double.infinity,
-      ),
+      _ResizeDirection.bottomRight => (oldSize.width + delta.dx).clamp(_minimumExtent, double.infinity),
       _ => oldSize.width,
     };
     final newHeight = switch (direction) {
       _ResizeDirection.top ||
       _ResizeDirection.topLeft ||
-      _ResizeDirection.topRight => (oldSize.height - delta.dy).clamp(
-        _minimumExtent,
-        double.infinity,
-      ),
+      _ResizeDirection.topRight => (oldSize.height - delta.dy).clamp(_minimumExtent, double.infinity),
       _ResizeDirection.bottom ||
       _ResizeDirection.bottomLeft ||
-      _ResizeDirection.bottomRight => (oldSize.height + delta.dy).clamp(
-        _minimumExtent,
-        double.infinity,
-      ),
+      _ResizeDirection.bottomRight => (oldSize.height + delta.dy).clamp(_minimumExtent, double.infinity),
       _ => oldSize.height,
     };
     final newSize = Size(newWidth, newHeight);
@@ -182,21 +160,13 @@ class _ResizableViewportState extends State<_ResizableViewport> {
         _translation +
         Offset(
           switch (direction) {
-            _ResizeDirection.left ||
-            _ResizeDirection.topLeft ||
-            _ResizeDirection.bottomLeft => -widthChange / 2,
-            _ResizeDirection.right ||
-            _ResizeDirection.topRight ||
-            _ResizeDirection.bottomRight => widthChange / 2,
+            _ResizeDirection.left || _ResizeDirection.topLeft || _ResizeDirection.bottomLeft => -widthChange / 2,
+            _ResizeDirection.right || _ResizeDirection.topRight || _ResizeDirection.bottomRight => widthChange / 2,
             _ => 0,
           },
           switch (direction) {
-            _ResizeDirection.top ||
-            _ResizeDirection.topLeft ||
-            _ResizeDirection.topRight => -heightChange / 2,
-            _ResizeDirection.bottom ||
-            _ResizeDirection.bottomLeft ||
-            _ResizeDirection.bottomRight => heightChange / 2,
+            _ResizeDirection.top || _ResizeDirection.topLeft || _ResizeDirection.topRight => -heightChange / 2,
+            _ResizeDirection.bottom || _ResizeDirection.bottomLeft || _ResizeDirection.bottomRight => heightChange / 2,
             _ => 0,
           },
         );
@@ -208,8 +178,7 @@ class _ResizableViewportState extends State<_ResizableViewport> {
   }
 
   ViewportData? get _matchingViewport {
-    if (widget.data.width == _size.width &&
-        widget.data.height == _size.height) {
+    if (widget.data.width == _size.width && widget.data.height == _size.height) {
       return widget.data;
     }
 
@@ -265,9 +234,7 @@ class _ResizableViewportState extends State<_ResizableViewport> {
               child: MediaQuery(
                 data: mediaQuery,
                 child: Navigator(
-                  onGenerateRoute: (_) => PageRouteBuilder(
-                    pageBuilder: (context, _, _) => widget.child,
-                  ),
+                  onGenerateRoute: (_) => PageRouteBuilder(pageBuilder: (context, _, _) => widget.child),
                 ),
               ),
             ),
@@ -297,11 +264,7 @@ class _ViewportFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewport = _ResizableViewportSurface(
-      size: size,
-      onResize: onResize,
-      child: child,
-    );
+    final viewport = _ResizableViewportSurface(size: size, onResize: onResize, child: child);
 
     if (frameless) return viewport;
 
@@ -316,12 +279,7 @@ class _ViewportFrame extends StatelessWidget {
             child: Container(
               color: Colors.green,
               padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-              child: Text(
-                title,
-                style: Theme.of(
-                  context,
-                ).textTheme.bodyMedium?.copyWith(color: Colors.black87),
-              ),
+              child: Text(title, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black87)),
             ),
           ),
           viewport,
@@ -332,11 +290,7 @@ class _ViewportFrame extends StatelessWidget {
 }
 
 class _ResizableViewportSurface extends StatelessWidget {
-  const _ResizableViewportSurface({
-    required this.size,
-    required this.onResize,
-    required this.child,
-  });
+  const _ResizableViewportSurface({required this.size, required this.onResize, required this.child});
 
   static const _handleExtent = 12.0;
 
@@ -466,11 +420,7 @@ class _ResizableViewportSurface extends StatelessWidget {
 }
 
 class _ResizeHandle extends StatelessWidget {
-  const _ResizeHandle({
-    super.key,
-    required this.direction,
-    required this.onResize,
-  });
+  const _ResizeHandle({super.key, required this.direction, required this.onResize});
 
   final _ResizeDirection direction;
   final void Function(_ResizeDirection direction, Offset delta) onResize;

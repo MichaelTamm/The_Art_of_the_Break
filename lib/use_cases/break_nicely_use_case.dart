@@ -5,6 +5,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
 import '../the_art_of_the_break.dart';
 import '../widgets/dart_code.dart';
+import '../widgets/scrollable_column.dart';
 
 @UseCase(name: 'Break Nicely', type: The_Art_of_the_Break)
 Widget buildCrossAxisAlignUseCase(BuildContext context) {
@@ -14,18 +15,18 @@ Widget buildCrossAxisAlignUseCase(BuildContext context) {
   final i = title.indexOf(' ');
   final titleAsDartString = "'${i < 0 ? title : title.substring(0, i + 1)}...'";
 
-  return Column(
+  return ScrollableColumn(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       SizedBox(height: 32),
       DartCode('Text($titleAsDartString)'),
       SizedBox(height: 8),
       _ExampleCard(title, fontSize, cardWidth),
-      Expanded(child: SizedBox.shrink()),
+      Expanded(child: SizedBox(height: 24)),
       DartCode('Text(breakNicely1($titleAsDartString))'),
       SizedBox(height: 8),
       _ExampleCard(breakNicely1(title), fontSize, cardWidth),
-      Expanded(child: SizedBox.shrink()),
+      Expanded(child: SizedBox(height: 24)),
       DartCode('Text(breakNicely2($titleAsDartString))'),
       SizedBox(height: 8),
       _ExampleCard(breakNicely2(title), fontSize, cardWidth),
