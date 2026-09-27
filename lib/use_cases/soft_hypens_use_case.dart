@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hyphenation/flutter_hyphenation.dart';
 import 'package:hyphenatorx/widget/texthyphenated.dart';
 import 'package:soft_hyphen_text/soft_hyphen_text.dart';
+import 'package:soft_hyphen_text_2/soft_hyphen_text_2.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart';
 
@@ -13,7 +14,6 @@ import '../auto_hyphenate.dart';
 import '../autovio/autovio_button.dart';
 import '../autovio/autovio_styles.dart';
 import '../autovio/layout_utils.dart';
-import '../autovio/soft_hyphen_text2.dart';
 import '../autovio/warning_box.dart';
 import '../the_art_of_the_break.dart';
 import '../widgets/dart_code.dart';
