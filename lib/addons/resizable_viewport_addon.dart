@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 
@@ -219,8 +221,14 @@ class _ResizableViewportState extends State<_ResizableViewport> {
     final theme = Theme.of(context).copyWith(platform: viewportData.platform);
 
     return FittedBox(
-      child: Transform.translate(
-        offset: _translation,
+      child: Padding(
+        // Twice the center offset keeps the moved frame inside the fitted bounds.
+        padding: EdgeInsets.fromLTRB(
+          math.max(0, _translation.dx * 2),
+          math.max(0, _translation.dy * 2),
+          math.max(0, -_translation.dx * 2),
+          math.max(0, -_translation.dy * 2),
+        ),
         child: _ViewportFrame(
           title: _title,
           frameless: widget.frameless,
@@ -274,13 +282,10 @@ class _ViewportFrame extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Transform.translate(
-            offset: const Offset(-_borderWidth, 0),
-            child: Container(
-              color: Colors.green,
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-              child: Text(title, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black87)),
-            ),
+          Container(
+            color: Colors.green,
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+            child: Text(title, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black87)),
           ),
           viewport,
         ],
@@ -300,75 +305,84 @@ class _ResizableViewportSurface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final surfaceSize = Size(
+      size.width + 2 * _ViewportFrame._borderWidth,
+      size.height + 2 * _ViewportFrame._borderWidth,
+    );
+    final handleSize = Size(
+      math.min(_handleExtent, surfaceSize.width / 2),
+      math.min(_handleExtent, surfaceSize.height / 2),
+    );
+
     return SizedBox(
-      width: size.width,
-      height: size.height,
+      width: surfaceSize.width,
+      height: surfaceSize.height,
       child: Stack(
         fit: StackFit.expand,
         children: [
           DecoratedBox(
             decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.green,
-                width: _ViewportFrame._borderWidth,
-                strokeAlign: BorderSide.strokeAlignOutside,
-              ),
+              border: Border.all(color: Colors.green, width: _ViewportFrame._borderWidth),
             ),
-            child: child,
+            child: Padding(padding: const EdgeInsets.all(_ViewportFrame._borderWidth), child: child),
           ),
           _edgeHandle(
             key: const ValueKey('resizable-viewport-top-handle'),
             direction: _ResizeDirection.top,
             top: 0,
-            left: _handleExtent,
-            right: _handleExtent,
-            height: _handleExtent,
+            left: handleSize.width,
+            right: handleSize.width,
+            height: handleSize.height,
           ),
           _edgeHandle(
             key: const ValueKey('resizable-viewport-bottom-handle'),
             direction: _ResizeDirection.bottom,
             bottom: 0,
-            left: _handleExtent,
-            right: _handleExtent,
-            height: _handleExtent,
+            left: handleSize.width,
+            right: handleSize.width,
+            height: handleSize.height,
           ),
           _edgeHandle(
             key: const ValueKey('resizable-viewport-left-handle'),
             direction: _ResizeDirection.left,
-            top: _handleExtent,
-            bottom: _handleExtent,
+            top: handleSize.height,
+            bottom: handleSize.height,
             left: 0,
-            width: _handleExtent,
+            width: handleSize.width,
           ),
           _edgeHandle(
             key: const ValueKey('resizable-viewport-right-handle'),
             direction: _ResizeDirection.right,
-            top: _handleExtent,
-            bottom: _handleExtent,
+            top: handleSize.height,
+            bottom: handleSize.height,
             right: 0,
-            width: _handleExtent,
+            width: handleSize.width,
           ),
           _cornerHandle(
             key: const ValueKey('resizable-viewport-top-left-handle'),
             direction: _ResizeDirection.topLeft,
+            handleSize: handleSize,
             top: 0,
             left: 0,
           ),
           _cornerHandle(
             key: const ValueKey('resizable-viewport-top-right-handle'),
             direction: _ResizeDirection.topRight,
+            handleSize: handleSize,
             top: 0,
             right: 0,
           ),
           _cornerHandle(
             key: const ValueKey('resizable-viewport-bottom-left-handle'),
             direction: _ResizeDirection.bottomLeft,
+            handleSize: handleSize,
             bottom: 0,
             left: 0,
           ),
           _cornerHandle(
             key: const ValueKey('resizable-viewport-bottom-right-handle'),
             direction: _ResizeDirection.bottomRight,
+            handleSize: handleSize,
             bottom: 0,
             right: 0,
           ),
@@ -401,6 +415,7 @@ class _ResizableViewportSurface extends StatelessWidget {
   Widget _cornerHandle({
     required Key key,
     required _ResizeDirection direction,
+    required Size handleSize,
     double? top,
     double? right,
     double? bottom,
@@ -413,8 +428,8 @@ class _ResizableViewportSurface extends StatelessWidget {
       right: right,
       bottom: bottom,
       left: left,
-      width: _handleExtent,
-      height: _handleExtent,
+      width: handleSize.width,
+      height: handleSize.height,
     );
   }
 }
