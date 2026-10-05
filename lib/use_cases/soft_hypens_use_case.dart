@@ -28,21 +28,42 @@ enum _Package {
   flutter_hyphenation,
   hyphenatorx,
   soft_hyphen_text,
-  soft_hyphen_text_2,
+  soft_hyphen_text_2__first_fit,
+  soft_hyphen_text_2__knuth_plass,
 }
 
 @UseCase(name: 'Soft Hyphens', type: The_Art_of_the_Break)
 Widget buildSoftHyphensUseCase(BuildContext context) {
   final textScaler = MediaQuery.textScalerOf(context);
+  final textAlign = context.knobs.object.dropdown(
+    label: "Text align",
+    options: TextAlign.values,
+    labelBuilder: (it) => it.name,
+  );
   final softHyphens = context.knobs.object.dropdown(
     label: "Soft hyphens",
     options: _SoftHyphens.values,
     labelBuilder: (it) => it == _SoftHyphens.auto ? 'auto (German)' : it.name,
+    initialOption: _SoftHyphens.none
   );
-  final package = context.knobs.object.dropdown(
-    label: "Package",
+  final packageCard1 = context.knobs.object.dropdown(
+    label: "Package for card 1",
     options: _Package.values,
-    labelBuilder: (it) => it.name,
+    labelBuilder: (it) => switch (it) {
+      _Package.soft_hyphen_text_2__first_fit => 'soft_hyphen_text_2 (First Fit)',
+      _Package.soft_hyphen_text_2__knuth_plass => 'soft_hyphen_text_2 (Knuth-Plass)',
+      _ => it.name,
+    },
+  );
+  final packageCard2 = context.knobs.object.dropdown(
+    label: "Package for card 2",
+    options: _Package.values,
+    labelBuilder: (it) => switch (it) {
+      _Package.soft_hyphen_text_2__first_fit => 'soft_hyphen_text_2 (First Fit)',
+      _Package.soft_hyphen_text_2__knuth_plass => 'soft_hyphen_text_2 (Knuth-Plass)',
+      _ => it.name,
+    },
+    initialOption: _Package.soft_hyphen_text_2__first_fit,
   );
   var title = context.knobs.string(
     label: 'Title',
@@ -54,11 +75,6 @@ Widget buildSoftHyphensUseCase(BuildContext context) {
     label: 'Text',
     initialValue: 'Damit deine privaten Termine berück(-)sichtigt werden können, wenn Fahr(-)schüler Fahr(-)stunden buchen, müssen diese regel(-)mäßig an unsere Server übertragen werden. Hierfür muss die Hinter(-)grund(-)aktualisierung für die App ein(-)geschaltet sein.',
     maxLines: 10,
-  );
-  final textAlign = context.knobs.object.dropdown(
-    label: "Text align",
-    options: TextAlign.values,
-    labelBuilder: (it) => it.name,
   );
   switch (softHyphens) {
     case _SoftHyphens.none:
@@ -72,9 +88,9 @@ Widget buildSoftHyphensUseCase(BuildContext context) {
       text = text.replaceAll('(-)', '').autoHyphenate();
   }
 
-  Widget buildWidget(_Package strategy, String data_, TextStyle style, [TextAlign? textAlign]) {
+  Widget buildTextWidget(_Package package, String data_, TextStyle style, [TextAlign? textAlign]) {
     final data = data_.replaceAll('_', '\u00A0');
-    return switch (strategy) {
+    return switch (package) {
       _Package.flutter => Text(data, style: style, textAlign: textAlign),
       _Package.auto_hyphenating_text => AutoHyphenatingText(data, style: style, textAlign: textAlign),
       _Package.custom_text_engine => Builder(
@@ -103,36 +119,45 @@ Widget buildSoftHyphensUseCase(BuildContext context) {
         textAlign: textAlign ?? TextAlign.start,
         textScaleFactor: textScaler.scale(16) / 16,
       ),
-      _Package.soft_hyphen_text_2 => SoftHyphenText2(data, style: style, textAlign: textAlign ?? TextAlign.start),
+      _Package.soft_hyphen_text_2__first_fit => SoftHyphenText2(
+        data,
+        style: style,
+        textAlign: textAlign ?? TextAlign.start,
+        layoutAlgorithm: LayoutAlgorithm.firstFit,
+      ),
+      _Package.soft_hyphen_text_2__knuth_plass => SoftHyphenText2(
+        data,
+        style: style,
+        textAlign: textAlign ?? TextAlign.start,
+      ),
     };
+  }
+
+  Iterable<Widget> buildWidgets(_Package package) sync* {
+    yield switch (package) {
+      _Package.flutter => DartCode("Text('...')"),
+      _Package.auto_hyphenating_text => DartCode("AutoHyphenatingText(...)"),
+      _Package.custom_text_engine => DartCode("AdvancedText(...)"),
+      _Package.flutter_hyphenation => DartCode("HyphenText(...)"),
+      _Package.hyphenatorx => DartCode("TextHyphenated(...)"),
+      _Package.soft_hyphen_text => DartCode('SoftHyphenText(...)'),
+      _Package.soft_hyphen_text_2__first_fit => DartCode('SoftHyphenText2(...)'),
+      _Package.soft_hyphen_text_2__knuth_plass => DartCode('SoftHyphenText2(...)'),
+    };
+    yield SizedBox(height: 8);
+    yield WarningBox(
+      buildTitle: (style) => buildTextWidget(package, breakTitleNicely ? breakNicely2(title) : title, style),
+      buildText: (style) => buildTextWidget(package, text, style, textAlign),
+      button: AutovioButton('Öffne App-Einstellungen', customStyle: smallButtonStyle),
+    ).withHorizontalPadding(20);
   }
 
   return ScrollableColumn(
     children: [
       Expanded(child: SizedBox(height: 8)),
-      DartCode("Text('...') // no soft hyphens"),
-      SizedBox(height: 8),
-      WarningBox(
-        buildTitle: (style) => Text(title.replaceAll('\u00AD', ''), style: style),
-        buildText: (style) => Text(text.replaceAll('\u00AD', ''), style: style, textAlign: textAlign),
-        button: AutovioButton('Öffne App-Einstellungen', customStyle: smallButtonStyle),
-      ).withHorizontalPadding(20),
+      ...buildWidgets(packageCard1),
       Expanded(child: SizedBox(height: 24)),
-      switch (package) {
-        _Package.flutter => DartCode("Text('...')"),
-        _Package.auto_hyphenating_text => DartCode("AutoHyphenatingText(...)"),
-        _Package.custom_text_engine => DartCode("AdvancedText(...)"),
-        _Package.flutter_hyphenation => DartCode("HyphenText(...)"),
-        _Package.hyphenatorx => DartCode("TextHyphenated(...)"),
-        _Package.soft_hyphen_text => DartCode('SoftHyphenText(...)'),
-        _Package.soft_hyphen_text_2 => DartCode('SoftHyphenText2(...)'),
-      },
-      SizedBox(height: 8),
-      WarningBox(
-        buildTitle: (style) => buildWidget(package, breakTitleNicely ? breakNicely2(title) : title, style),
-        buildText: (style) => buildWidget(package, text, style, textAlign),
-        button: AutovioButton('Öffne App-Einstellungen', customStyle: smallButtonStyle),
-      ).withHorizontalPadding(20),
+      ...buildWidgets(packageCard2),
       Expanded(child: SizedBox(height: 8)),
     ],
   );

@@ -54,15 +54,15 @@ final directories = <_widgetbook.WidgetbookNode>[
                 .buildCrossAxisAlignUseCase,
       ),
       _widgetbook.WidgetbookUseCase(
-        name: 'Soft Hyphens',
-        builder: _the_art_of_the_break_widgetbook_use_cases_soft_hypens_use_case
-            .buildSoftHyphensUseCase,
-      ),
-      _widgetbook.WidgetbookUseCase(
         name: 'Text Overflow',
         builder:
             _the_art_of_the_break_widgetbook_use_cases_text_overflow_use_case
                 .buildTextOverflowUseCase,
+      ),
+      _widgetbook.WidgetbookUseCase(
+        name: 'Soft Hyphens',
+        builder: _the_art_of_the_break_widgetbook_use_cases_soft_hypens_use_case
+            .buildSoftHyphensUseCase,
       ),
     ],
   ),

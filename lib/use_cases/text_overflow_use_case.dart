@@ -9,8 +9,8 @@ import '../widgets/split_screen.dart';
 
 @UseCase(name: 'Text Overflow', type: The_Art_of_the_Break)
 Widget buildTextOverflowUseCase(BuildContext context) {
-  final cardWidth = context.knobs.double.slider(label: 'Card width', initialValue: 180, min: 80, max: 200);
-  final cardHeight = context.knobs.double.slider(label: 'Card height', initialValue: 160, min: 80, max: 300);
+  final cardWidth = context.knobs.double.slider(label: 'Card width', initialValue: 160, min: 50, max: 300);
+  final cardHeight = context.knobs.double.slider(label: 'Card height', initialValue: 160, min: 50, max: 300);
   final title = context.knobs.string(label: 'Title', initialValue: 'Dummy Title');
   final titleWithZWSP = Characters(title).toList().join('\u{200B}');
   final titleMaxLines = context.knobs.object.dropdown<String>(
@@ -23,54 +23,50 @@ Widget buildTextOverflowUseCase(BuildContext context) {
 
   return ScrollableColumn(
     children: [
-      Expanded(
-        child: Row(
-          children: [
-            Expanded(
-              child: Align(alignment: .bottomCenter, child: DartCode('overflow: .clip')),
-            ),
-            Expanded(
-              child: Align(alignment: .bottomCenter, child: DartCode('overflow: .fade')),
-            ),
-            Expanded(
-              child: Align(alignment: .bottomCenter, child: DartCode('overflow: .ellipsis')),
-            ),
-            Expanded(
-              child: Align(alignment: .bottomCenter, child: DartCode('overflow: .visible')),
-            ),
-          ],
-        ),
+      Expanded(child: SizedBox(height: 8)),
+      Row(
+        children: [
+          Expanded(
+            child: Align(alignment: .bottomCenter, child: DartCode('overflow:\n  .clip')),
+          ),
+          Expanded(
+            child: Align(alignment: .bottomCenter, child: DartCode('overflow:\n  .fade')),
+          ),
+          Expanded(
+            child: Align(alignment: .bottomCenter, child: DartCode('overflow:\n  .ellipsis')),
+          ),
+          Expanded(
+            child: Align(alignment: .bottomCenter, child: DartCode('overflow:\n  .visible')),
+          ),
+        ],
       ),
       SizedBox(height: 8),
-      Expanded(
-        child: SplitScreen(
+      SplitScreen(
+        childSize: Size(cardWidth, cardHeight),
+        childAlignment: .topCenter,
+        children: [
+          _ExampleCard(title: title, overflow: .clip, maxLines: maxLines),
+          _ExampleCard(title: title, overflow: .fade, maxLines: maxLines),
+          _ExampleCard(title: title, overflow: .ellipsis, maxLines: maxLines),
+          _ExampleCard(title: title, overflow: .visible, maxLines: maxLines),
+        ],
+      ),
+      if (showZWSPHack) ...[
+        Expanded(child: SizedBox(height: 24)),
+        Center(child: DartCode("Characters(title).toList().join('\\u{200B}')")),
+        SizedBox(height: 8),
+        SplitScreen(
           childSize: Size(cardWidth, cardHeight),
           childAlignment: .topCenter,
           children: [
-            _ExampleCard(title: title, overflow: .clip, maxLines: maxLines),
-            _ExampleCard(title: title, overflow: .fade, maxLines: maxLines),
-            _ExampleCard(title: title, overflow: .ellipsis, maxLines: maxLines),
-            _ExampleCard(title: title, overflow: .visible, maxLines: maxLines),
+            _ExampleCard(title: titleWithZWSP, overflow: .clip, maxLines: maxLines),
+            _ExampleCard(title: titleWithZWSP, overflow: .fade, maxLines: maxLines),
+            _ExampleCard(title: titleWithZWSP, overflow: .ellipsis, maxLines: maxLines),
+            _ExampleCard(title: titleWithZWSP, overflow: .visible, maxLines: maxLines),
           ],
         ),
-      ),
-      if (showZWSPHack) ...[
-        SizedBox(height: 8),
-        Center(child: DartCode("Characters(title).toList().join('\\u{200B}')")),
-        SizedBox(height: 8),
-        Expanded(
-          child: SplitScreen(
-            childSize: Size(cardWidth, cardHeight),
-            childAlignment: .topCenter,
-            children: [
-              _ExampleCard(title: titleWithZWSP, overflow: .clip, maxLines: maxLines),
-              _ExampleCard(title: titleWithZWSP, overflow: .fade, maxLines: maxLines),
-              _ExampleCard(title: titleWithZWSP, overflow: .ellipsis, maxLines: maxLines),
-              _ExampleCard(title: titleWithZWSP, overflow: .visible, maxLines: maxLines),
-            ],
-          ),
-        ),
       ],
+      Expanded(child: SizedBox(height: 8)),
     ],
   );
 }

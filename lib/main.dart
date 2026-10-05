@@ -10,7 +10,7 @@ import 'main.directories.g.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initHyphenation();
+  await initHyphenation(DefaultResourceLoaderLanguage.de1996);
   await initAutoHyphenate(const Locale('de'));
   await HyphenationRegistry.instance.registerAsset(const Locale('de'), 'assets/hyph-de-1996.tex');
   runApp(const WidgetbookApp());
