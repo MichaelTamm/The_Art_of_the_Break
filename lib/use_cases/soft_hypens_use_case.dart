@@ -63,7 +63,7 @@ Widget buildSoftHyphensUseCase(BuildContext context) {
       _Package.soft_hyphen_text_2__knuth_plass => 'soft_hyphen_text_2 (Knuth-Plass)',
       _ => it.name,
     },
-    initialOption: _Package.soft_hyphen_text_2__first_fit,
+    initialOption: _Package.soft_hyphen_text_2__knuth_plass,
   );
   var title = context.knobs.string(
     label: 'Title',
